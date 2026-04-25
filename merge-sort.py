@@ -40,3 +40,60 @@ def merge(left, right):
 arr = [38, 27, 43, 3, 9, 82, 10]
 sorted_arr = merge_sort(arr)
 print(sorted_arr)
+# ---------------------------------------------------------------------------
+def quick_sort(arr, low, high):
+    # This function sorts the array in-place using Quick Sort
+
+    if low < high:
+        # WHY: We only sort if there are at least 2 elements
+        # If low >= high → 0 or 1 element → already sorted
+
+        pi = partition(arr, low, high)
+        # WHY: Partition function places pivot at correct position
+        # and returns its index (pi = pivot index)
+
+        quick_sort(arr, low, pi - 1)
+        # WHY: Recursively sort left part (elements smaller than pivot)
+
+        quick_sort(arr, pi + 1, high)
+        # WHY: Recursively sort right part (elements greater than pivot)
+
+
+def partition(arr, low, high):
+    pivot = arr[high]
+    # WHY: Choosing last element as pivot (simple and common method)
+
+    i = low - 1
+    # WHY: i keeps track of "smaller elements region"
+    # Initially no elements are smaller → so i = low - 1
+
+    for j in range(low, high):
+        # WHY: j scans the array from low to high-1
+        # We compare each element with pivot
+
+        if arr[j] < pivot:
+            # WHY: If current element is smaller than pivot,
+            # it belongs to left side
+
+            i += 1
+            # WHY: Expand the "smaller elements" region
+
+            arr[i], arr[j] = arr[j], arr[i]
+            # WHY: Swap element to correct position in smaller region
+
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    # WHY: Place pivot after last smaller element
+    # Now pivot is at correct sorted position
+
+    return i + 1
+    # WHY: Return pivot index so recursion can divide array
+
+
+# Example usage
+arr = [38, 27, 43, 3, 9, 82, 10]
+
+quick_sort(arr, 0, len(arr) - 1)
+# WHY: Initial call → full array from index 0 to last
+
+print(arr)
+# Output: Sorted array
